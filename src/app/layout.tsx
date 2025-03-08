@@ -1,27 +1,19 @@
-import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { ThemeProvider } from 'next-themes'
-import { Toaster } from '@/components/ui/sonner'
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton
-} from '@clerk/nextjs'
-import { Suspense } from 'react'
-import Loading from './loading'
+import { Metadata } from 'next'
 import { APP_DESCRIPTION, APP_NAME } from '@/lib/constants'
+import { Suspense } from 'react'
 
-// import ResponsiveNavbar from '@/components/navbar/responsive-nav'
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
+import Loading from './loading'
+import { ClerkProvider } from '@clerk/nextjs'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | Shey Properties`,
+    template: `%s | WpAccPac`,
     default: APP_NAME
   },
   description: APP_DESCRIPTION
@@ -35,30 +27,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider afterSignOutUrl={'/sign-in'}>
-      <html
-        lang='en'
-        suppressHydrationWarning
-        className='scroll-smooth antialiased'
-      >
+      <html lang='en' suppressHydrationWarning>
         <body className={`${inter.className} antialiased`}>
           <ThemeProvider
             attribute='class'
-            defaultTheme='light'
+            defaultTheme='system'
             enableSystem
             disableTransitionOnChange
           >
-            <Suspense fallback={<Loading />}>
-              <header className='flex h-16 items-center justify-end gap-4 border border-b p-4'>
-                <SignedOut>
-                  <SignInButton />
-                  <SignUpButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </header>
-              {children}
-            </Suspense>
+            <main className='flex h-screen flex-col'>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </main>
             <Toaster />
           </ThemeProvider>
         </body>
