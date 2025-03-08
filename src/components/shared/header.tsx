@@ -5,10 +5,16 @@ import {
   SignedOut,
   UserButton
 } from '@clerk/nextjs'
+import Link from 'next/link'
 
 export default function Header() {
   return (
-    <header className='flex h-16 items-center justify-end gap-4 p-4'>
+    <header className='container mx-auto flex h-16 items-center justify-between gap-4 p-4'>
+      <div className='items-center space-x-4 text-blue-600'>
+        <Link href='/'>Home</Link>
+        <Link href='/admin'>Admin</Link>
+      </div>
+
       <SignedOut>
         <SignInButton />
         <SignUpButton />
