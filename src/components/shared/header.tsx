@@ -1,3 +1,4 @@
+import { GetCurrentUserFromDB } from '@/actions/user'
 import {
   SignInButton,
   SignUpButton,
@@ -7,7 +8,8 @@ import {
 } from '@clerk/nextjs'
 import Link from 'next/link'
 
-export default function Header() {
+export default async function Header() {
+  await GetCurrentUserFromDB()
   return (
     <header className='container mx-auto flex h-16 items-center justify-between gap-4 p-4'>
       <div className='items-center space-x-4 text-blue-600'>

@@ -27,6 +27,7 @@ const HomePage = async () => {
       </div>
       <h1>Clerk user id: {loggedInUser?.id} </h1>
       <h1>Clerk user email: {loggedInUser?.emailAddresses[0].emailAddress}</h1>
+      <h1>Clerk user username: {loggedInUser?.username}</h1>
     </div>
   )
 }
