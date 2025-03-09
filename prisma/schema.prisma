@@ -27,6 +27,7 @@ model User {
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   Property     Property[]
+  Profile      Profile[]
   Query        Query[]
   
   @@map("users")
@@ -69,6 +70,57 @@ model Property {
 
  @@map("properties")
 }
+
+// profile model
+model Profile {
+  id               String   @id @default(cuid())
+  userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  firstName        String
+  lastName         String
+  email            String
+  phone            String
+  country          String
+  county           String
+  town             String
+  address          String
+  postCode         String?
+  resume           Resume[]
+  job              Job[]
+  portfolio        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+ 
+
+ @@map("profiles")
+}
+model Resume {
+  id               String   @id @default(cuid())
+  title            String
+  profileId        String
+  profile          Profile     @relation(fields: [profileId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+ @@map("resumes")
+}
+model Job {
+  id               String   @id @default(cuid())
+  profileId        String
+  profile          Profile     @relation(fields: [profileId], references: [id])
+  title            String
+  company          String
+  from             DateTime
+  to               DateTime
+  description      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+ @@map("jobs")
+}
+
+
 
 // query model
 
