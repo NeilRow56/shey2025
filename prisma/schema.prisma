@@ -87,7 +87,6 @@ model Profile {
   postCode         String?
   resume           Resume[]
   job              Job[]
-  portfolio        String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   

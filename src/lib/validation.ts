@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { isValidEmail } from '@/lib/utils'
-import { isValidPhoneNumber } from 'react-phone-number-input'
+
 import {
   convertMetricsToBytes,
   FileExtension,
@@ -9,36 +8,7 @@ import {
   MimeType
 } from '@/lib/files'
 
-const EmailValidationSchema = z
-  .string()
-  .email()
-  .superRefine(async (email, ctx) => {
-    const isAvailable = await isValidEmail(email)
-    if (!isAvailable) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Email is not valid'
-      })
-    }
-
-    if (email) {
-      const hasAddSign = email.includes('+')
-      if (hasAddSign) {
-        ctx.addIssue({
-          code: 'custom',
-          message: "Email should not contain '+' sign"
-        })
-      }
-
-      const isSubDomainEmail = email.split('@')[1].split('.').length > 2
-      if (isSubDomainEmail) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Email should not contain subdomains'
-        })
-      }
-    }
-  })
+const EmailValidationSchema = z.string().email()
 
 const jobSchema = z
   .object({
@@ -94,9 +64,7 @@ export const formSchema = z.object({
     .min(2, { message: 'Last name must be at least 2 characters long' })
     .max(70, { message: 'Last name must be at most 70 characters long' }),
   email: EmailValidationSchema,
-  phone: z
-    .string()
-    .refine(isValidPhoneNumber, { message: 'Invalid phone number' }),
+  phone: z.string(),
   country: z
     .string()
     .min(2, { message: 'Country must be at least 2 characters' })
@@ -118,14 +86,8 @@ export const formSchema = z.object({
   jobs: z.array(jobSchema).min(1, {
     message: 'At least one job should be added'
   }),
-  github: z
-    .string()
-    .url({ message: 'Invalid URL format' })
-    .refine(url => url.includes('github'), {
-      message: 'URL should be a GitHub profile'
-    }),
-  resume: z.array(ResumeValidationSchema),
-  portfolio: z.string().url({ message: 'Invalid URL format' })
+
+  resume: z.array(ResumeValidationSchema)
 })
 
 export type FormSchemaType = z.infer<typeof formSchema>

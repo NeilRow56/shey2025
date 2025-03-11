@@ -5,7 +5,7 @@ import React, { Suspense } from 'react'
 const PropertiesPage = () => {
   return (
     <div className='container'>
-      <div className='mt-16 mb-5 flex w-full items-center justify-between'>
+      <div className='mt-12 mb-6 flex w-full items-center justify-between'>
         <PageTitle title='Properties ' />
 
         <LinkButton

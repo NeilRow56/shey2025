@@ -6,22 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const isValidEmail = async (email: string) => {
-  try {
-    const isDisposableResponse = await fetch(
-      `https://open.kickbox.com/v1/disposable/${email}`
-    )
-    const isDisposable = await isDisposableResponse.json()
-    if (isDisposable?.disposable) {
-      return false
-    }
-
-    return true
-  } catch {
-    return true
-  }
-}
-
 export const fetchAddress = async (latitude: number, longitude: number) => {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
 
